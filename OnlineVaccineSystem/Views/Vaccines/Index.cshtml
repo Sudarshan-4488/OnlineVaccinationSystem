@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnlineVaccineSystem.data.Vaccine>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Vaccine Type List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineNextDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineAge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoseCount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaccineName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaccineNextDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaccineAge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaccineCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoseCount)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,65 @@
+﻿@model OnlineVaccineSystem.data.Vaccine
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div class="table-bordered">
+    <h4>Vaccine</h4>
+    <hr />
+    <dl class="dl-horizontal ">
+        <dt>
+            @Html.DisplayNameFor(model => model.VaccineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaccineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VaccineNextDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaccineNextDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VaccineAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaccineAge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VaccineCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaccineCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoseCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoseCount)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

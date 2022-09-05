@@ -1,0 +1,92 @@
+﻿@model OnlineVaccineSystem.data.UserMaster
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<link href="~/Content/certificate.css" rel="stylesheet" />
+@section Scripts{
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            //document.body.innerHTML = printContents;
+
+            var mywindow = window.open('', 'new div', 'height=400,width=600');
+            mywindow.document.write('<html><head><title></title>');
+            mywindow.document.write('<link rel="stylesheet" href="/Content/certificate.css" type="text/css" />');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(printContents);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            setTimeout(function () { mywindow.print(); }, 1000);
+            //mywindow.close();
+
+            return true;
+        }
+    </script>
+}
+<style>
+    .outer-border {
+        width: 800px;
+        height: 650px;
+        padding: 20px;
+        text-align: center;
+        border: 10px solid #673AB7;
+        margin-left: 21%;
+    }
+
+    .inner-dotted-border {
+        width: 750px;
+        height: 600px;
+        padding: 20px;
+        text-align: center;
+        border: 5px solid #673AB7;
+        border-style: dotted;
+    }
+
+    .certification {
+        font-size: 50px;
+        font-weight: bold;
+        color: #663ab7;
+    }
+
+    .certify {
+        font-size: 25px;
+    }
+
+    .name {
+        font-size: 30px;
+        color: green;
+    }
+
+    .fs-30 {
+        font-size: 30px;
+    }
+
+    .fs-20 {
+        font-size: 20px;
+    }
+</style>
+
+<button class="show" onclick="printDiv('printableArea')" aria-haspopup="true">Download</button>
+
+<!-- Modal -->
+<div class="outer-border" id="printableArea"> 
+    <div class="inner-dotted-border">
+        <span class="certification">Certificate for COVID-19 Vaccination</span>
+        <br><br>
+        <span class="certify"><i>Issued in India by Ministry of Health & Family Welfare, Govt. of India</i></span>
+        <br><br>
+        <span class="name"><b>@Model.Name</b></span><br /><br />
+        <span class="certify"><i>has successfully Vaccinated</i></span> <br /><br />
+        <span class="fs-30">COVID-19 Vaccination</span> <br /><br />
+        <span class="fs-20">Vaccinated Doses <b>@Model.AppoimentMasters.Count</b></span> <br /><br /><br /><br />
+        <span class="certify"><i>dated</i></span><br>
+
+        <span class="fs-30">@Model.AppoimentMasters.First().AppoimentDate</span>
+
+    </div>
+</div>

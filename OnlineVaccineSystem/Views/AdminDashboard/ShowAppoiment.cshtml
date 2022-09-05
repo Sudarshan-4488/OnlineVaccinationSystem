@@ -1,0 +1,60 @@
+﻿
+@model OnlineVaccineSystem.Models.UserDashBoardModel
+
+@{
+    ViewBag.Title = "User Appoinment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+
+        <h1>User Details</h1>
+
+        @foreach (var item in Model.UserMaster)
+        {
+            @*@Html.ActionLink("Add Family Member", "Create", new { Id = item.Id })*@
+            @*<li>@Html.ActionLink("Update User", "Edit", "UserMasters", new { Id = item.Id }, null)</li>*@
+    <div class="jumbotron">
+        <ul class="list-group">
+            <li class="list-group-item">Name <span class="badge"> @item._user.Name</span></li>
+            <li class="list-group-item">Mobile Number <span class="badge"> @item._user.MobileNo</span></li>
+            <li class="list-group-item">Email Address <span class="badge"> @item._user.EmailId</span></li>
+            <li class="list-group-item">Address <span class="badge"> @item._user.Address</span></li>
+            <li class="list-group-item">Birth Date <span class="badge">@item._user.BirthDate.ToString()</span></li>
+        </ul>
+        @*@Html.ActionLink("Book Appoiment", "Create", "AppoimentMasters", new { Id = @item._user.Id }, null)*@
+
+        @foreach (var it in item.AppoimentMasters)
+        {
+            <ul class="list-group">
+                <li class="list-group-item">Vaccine Name <span class="badge"> @it.Vaccine.VaccineName</span></li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item">Appoiment Date <span class="badge"> @it.AppoimentDate</span></li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item">Appoiment Date <span class="badge"> @it.VaccineCenter.CenterName</span></li>
+                <li class="list-group-item">Appoiment State <span class="badge"> @it.VaccineCenter.CenterState</span></li>
+                <li class="list-group-item">Appoiment City <span class="badge"> @it.VaccineCenter.CenterDistict</span></li>
+            </ul>
+            <li>@Html.ActionLink("Download Certificate", "Certiciate", "UserDashboard", new { Id = @item._user.Id }, null)</li>
+        }
+
+    </div>
+
+
+        }
+
+
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

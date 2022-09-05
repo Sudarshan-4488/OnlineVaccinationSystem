@@ -1,0 +1,43 @@
+﻿@model OnlineVaccineSystem.data.VaccineCenter
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="table-bordered">
+    <h4>VaccineCenter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CenterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CenterName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CenterState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CenterState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CenterDistict)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CenterDistict)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

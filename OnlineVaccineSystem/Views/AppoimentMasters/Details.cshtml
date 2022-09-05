@@ -1,0 +1,67 @@
+﻿@model OnlineVaccineSystem.data.AppoimentMaster
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="table-bordered">
+    <h4>AppoimentMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CenterSlot.SlotTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CenterSlot.SlotTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserMaster.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserMaster.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vaccine.VaccineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vaccine.VaccineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VaccineCenter.CenterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaccineCenter.CenterName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

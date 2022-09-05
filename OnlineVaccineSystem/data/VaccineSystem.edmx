@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VaccineSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppoimentMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlotID" Type="int" />
+          <Property Name="CenterId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="VaccineId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="AppoimentDate" Type="date" />
+        </EntityType>
+        <EntityType Name="CenterSlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="VaccineId" Type="int" />
+          <Property Name="CenterId" Type="int" />
+          <Property Name="SlotCount" Type="int" />
+          <Property Name="SlotTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserMasters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Vaccine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VaccineName" Type="varchar" MaxLength="50" />
+          <Property Name="VaccineNextDays" Type="int" />
+          <Property Name="VaccineAge" Type="int" />
+          <Property Name="VaccineCost" Type="money" />
+          <Property Name="DoseCount" Type="int" />
+        </EntityType>
+        <EntityType Name="VaccineCenter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CenterName" Type="varchar" MaxLength="100" />
+          <Property Name="CenterState" Type="varchar" MaxLength="100" />
+          <Property Name="CenterDistict" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AppoimentMaster_CenterSlot">
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CenterSlot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="SlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_UserMasters">
+          <End Role="UserMasters" Type="Self.UserMasters" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMasters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_Vaccine">
+          <End Role="Vaccine" Type="Self.Vaccine" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="VaccineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_VaccineCenter">
+          <End Role="VaccineCenter" Type="Self.VaccineCenter" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaccineCenter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="CenterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CenterSlot_Vaccine">
+          <End Role="Vaccine" Type="Self.Vaccine" Multiplicity="0..1" />
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CenterSlot">
+              <PropertyRef Name="VaccineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CenterSlot_VaccineCenter">
+          <End Role="VaccineCenter" Type="Self.VaccineCenter" Multiplicity="0..1" />
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaccineCenter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CenterSlot">
+              <PropertyRef Name="CenterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VaccineSystemModelStoreContainer">
+          <EntitySet Name="AppoimentMaster" EntityType="Self.AppoimentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CenterSlot" EntityType="Self.CenterSlot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMasters" EntityType="Self.UserMasters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vaccine" EntityType="Self.Vaccine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VaccineCenter" EntityType="Self.VaccineCenter" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AppoimentMaster_CenterSlot" Association="Self.FK_AppoimentMaster_CenterSlot">
+            <End Role="CenterSlot" EntitySet="CenterSlot" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_UserMasters" Association="Self.FK_AppoimentMaster_UserMasters">
+            <End Role="UserMasters" EntitySet="UserMasters" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_Vaccine" Association="Self.FK_AppoimentMaster_Vaccine">
+            <End Role="Vaccine" EntitySet="Vaccine" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_VaccineCenter" Association="Self.FK_AppoimentMaster_VaccineCenter">
+            <End Role="VaccineCenter" EntitySet="VaccineCenter" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CenterSlot_Vaccine" Association="Self.FK_CenterSlot_Vaccine">
+            <End Role="Vaccine" EntitySet="Vaccine" />
+            <End Role="CenterSlot" EntitySet="CenterSlot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CenterSlot_VaccineCenter" Association="Self.FK_CenterSlot_VaccineCenter">
+            <End Role="VaccineCenter" EntitySet="VaccineCenter" />
+            <End Role="CenterSlot" EntitySet="CenterSlot" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VaccineSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppoimentMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlotID" Type="Int32" />
+          <Property Name="CenterId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="VaccineId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="AppoimentDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CenterSlot" Relationship="Self.FK_AppoimentMaster_CenterSlot" FromRole="AppoimentMaster" ToRole="CenterSlot" />
+          <NavigationProperty Name="UserMaster" Relationship="Self.FK_AppoimentMaster_UserMasters" FromRole="AppoimentMaster" ToRole="UserMasters" />
+          <NavigationProperty Name="Vaccine" Relationship="Self.FK_AppoimentMaster_Vaccine" FromRole="AppoimentMaster" ToRole="Vaccine" />
+          <NavigationProperty Name="VaccineCenter" Relationship="Self.FK_AppoimentMaster_VaccineCenter" FromRole="AppoimentMaster" ToRole="VaccineCenter" />
+        </EntityType>
+        <EntityType Name="CenterSlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="VaccineId" Type="Int32" />
+          <Property Name="CenterId" Type="Int32" />
+          <Property Name="SlotCount" Type="Int32" />
+          <Property Name="SlotTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AppoimentMasters" Relationship="Self.FK_AppoimentMaster_CenterSlot" FromRole="CenterSlot" ToRole="AppoimentMaster" />
+          <NavigationProperty Name="Vaccine" Relationship="Self.FK_CenterSlot_Vaccine" FromRole="CenterSlot" ToRole="Vaccine" />
+          <NavigationProperty Name="VaccineCenter" Relationship="Self.FK_CenterSlot_VaccineCenter" FromRole="CenterSlot" ToRole="VaccineCenter" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="AppoimentMasters" Relationship="Self.FK_AppoimentMaster_UserMasters" FromRole="UserMasters" ToRole="AppoimentMaster" />
+        </EntityType>
+        <EntityType Name="Vaccine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VaccineName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VaccineNextDays" Type="Int32" />
+          <Property Name="VaccineAge" Type="Int32" />
+          <Property Name="VaccineCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DoseCount" Type="Int32" />
+          <NavigationProperty Name="AppoimentMasters" Relationship="Self.FK_AppoimentMaster_Vaccine" FromRole="Vaccine" ToRole="AppoimentMaster" />
+          <NavigationProperty Name="CenterSlots" Relationship="Self.FK_CenterSlot_Vaccine" FromRole="Vaccine" ToRole="CenterSlot" />
+        </EntityType>
+        <EntityType Name="VaccineCenter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CenterName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CenterState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CenterDistict" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AppoimentMasters" Relationship="Self.FK_AppoimentMaster_VaccineCenter" FromRole="VaccineCenter" ToRole="AppoimentMaster" />
+          <NavigationProperty Name="CenterSlots" Relationship="Self.FK_CenterSlot_VaccineCenter" FromRole="VaccineCenter" ToRole="CenterSlot" />
+        </EntityType>
+        <Association Name="FK_AppoimentMaster_CenterSlot">
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CenterSlot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="SlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_UserMasters">
+          <End Role="UserMasters" Type="Self.UserMaster" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMasters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_Vaccine">
+          <End Role="Vaccine" Type="Self.Vaccine" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="VaccineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppoimentMaster_VaccineCenter">
+          <End Role="VaccineCenter" Type="Self.VaccineCenter" Multiplicity="0..1" />
+          <End Role="AppoimentMaster" Type="Self.AppoimentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaccineCenter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppoimentMaster">
+              <PropertyRef Name="CenterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CenterSlot_Vaccine">
+          <End Role="Vaccine" Type="Self.Vaccine" Multiplicity="0..1" />
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CenterSlot">
+              <PropertyRef Name="VaccineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CenterSlot_VaccineCenter">
+          <End Role="VaccineCenter" Type="Self.VaccineCenter" Multiplicity="0..1" />
+          <End Role="CenterSlot" Type="Self.CenterSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaccineCenter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CenterSlot">
+              <PropertyRef Name="CenterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VaccineSystemEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppoimentMasters" EntityType="Self.AppoimentMaster" />
+          <EntitySet Name="CenterSlots" EntityType="Self.CenterSlot" />
+          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+          <EntitySet Name="Vaccines" EntityType="Self.Vaccine" />
+          <EntitySet Name="VaccineCenters" EntityType="Self.VaccineCenter" />
+          <AssociationSet Name="FK_AppoimentMaster_CenterSlot" Association="Self.FK_AppoimentMaster_CenterSlot">
+            <End Role="CenterSlot" EntitySet="CenterSlots" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_UserMasters" Association="Self.FK_AppoimentMaster_UserMasters">
+            <End Role="UserMasters" EntitySet="UserMasters" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_Vaccine" Association="Self.FK_AppoimentMaster_Vaccine">
+            <End Role="Vaccine" EntitySet="Vaccines" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppoimentMaster_VaccineCenter" Association="Self.FK_AppoimentMaster_VaccineCenter">
+            <End Role="VaccineCenter" EntitySet="VaccineCenters" />
+            <End Role="AppoimentMaster" EntitySet="AppoimentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CenterSlot_Vaccine" Association="Self.FK_CenterSlot_Vaccine">
+            <End Role="Vaccine" EntitySet="Vaccines" />
+            <End Role="CenterSlot" EntitySet="CenterSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CenterSlot_VaccineCenter" Association="Self.FK_CenterSlot_VaccineCenter">
+            <End Role="VaccineCenter" EntitySet="VaccineCenters" />
+            <End Role="CenterSlot" EntitySet="CenterSlots" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VaccineSystemModelStoreContainer" CdmEntityContainer="VaccineSystemEntities2">
+          <EntitySetMapping Name="AppoimentMasters">
+            <EntityTypeMapping TypeName="VaccineSystemModel.AppoimentMaster">
+              <MappingFragment StoreEntitySet="AppoimentMaster">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SlotID" ColumnName="SlotID" />
+                <ScalarProperty Name="CenterId" ColumnName="CenterId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VaccineId" ColumnName="VaccineId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="AppoimentDate" ColumnName="AppoimentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CenterSlots">
+            <EntityTypeMapping TypeName="VaccineSystemModel.CenterSlot">
+              <MappingFragment StoreEntitySet="CenterSlot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="VaccineId" ColumnName="VaccineId" />
+                <ScalarProperty Name="CenterId" ColumnName="CenterId" />
+                <ScalarProperty Name="SlotCount" ColumnName="SlotCount" />
+                <ScalarProperty Name="SlotTime" ColumnName="SlotTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="VaccineSystemModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMasters">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vaccines">
+            <EntityTypeMapping TypeName="VaccineSystemModel.Vaccine">
+              <MappingFragment StoreEntitySet="Vaccine">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VaccineName" ColumnName="VaccineName" />
+                <ScalarProperty Name="VaccineNextDays" ColumnName="VaccineNextDays" />
+                <ScalarProperty Name="VaccineAge" ColumnName="VaccineAge" />
+                <ScalarProperty Name="VaccineCost" ColumnName="VaccineCost" />
+                <ScalarProperty Name="DoseCount" ColumnName="DoseCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VaccineCenters">
+            <EntityTypeMapping TypeName="VaccineSystemModel.VaccineCenter">
+              <MappingFragment StoreEntitySet="VaccineCenter">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CenterName" ColumnName="CenterName" />
+                <ScalarProperty Name="CenterState" ColumnName="CenterState" />
+                <ScalarProperty Name="CenterDistict" ColumnName="CenterDistict" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

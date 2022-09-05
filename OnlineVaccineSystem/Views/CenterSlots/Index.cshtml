@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OnlineVaccineSystem.data.CenterSlot>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2> Vaccine Center Slot</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlotCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlotTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineCenter.CenterName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vaccine.VaccineName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlotCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlotTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VaccineCenter.CenterName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vaccine.VaccineName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
